@@ -2,8 +2,10 @@ let inp = document.getElementById("input");
 let search = document.getElementById("searchbtn");
 let hist = document.getElementById("history");
 let main = document.querySelector(".maindiv");
-
 main.style.borderRadius = "20px";
+
+let imgTag = document.getElementById('dlt');
+
 
 hist.addEventListener("click", () => {
   if (hist.innerText == "HISTORY") {
@@ -18,7 +20,7 @@ hist.addEventListener("click", () => {
 
     if (localStorage.length === 0) {
       let history = document.querySelector(".history");
-      history.innerHTML = `<div id="length"><h3>No Privious History</h3></div>`;
+      history.innerHTML = `<div id="length"><h2>No History Found</h2></div>`;
     }
 
     for (let i = 0; i < localStorage.length; i++) {
@@ -61,9 +63,16 @@ function deletediv(currentElement) {
 }
 
 search.addEventListener("click", () => {
+
+    let inVal = inp.value;
+ 
+    if(inVal === ""){
+      return;
+    }
+
   document.querySelector(".searching").innerText =
     "Searching for the meaning....";
-  let inVal = inp.value;
+  
   fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${inVal}`)
     .then((response) => response.json())
     .then((data) => {
